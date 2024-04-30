@@ -1,0 +1,11 @@
+﻿@model Test
+
+<div class="row mt-2 d-flex justify-content-between">
+    <div class="col-10">
+        @Html.DropDownListFor(x => x.TestId, ViewBag.test as SelectList, "--Select--", new { @class = "form-select" })
+    </div>
+    <div class="d-flex justify-content-end col-2">
+        <a id="btnRemove" class="btn btn-danger">Remove</a>
+    </div>
+</div>
+

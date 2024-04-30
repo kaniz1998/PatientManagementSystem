@@ -1,0 +1,84 @@
+﻿@model PatientVM
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form asp-action="Edit" enctype="multipart/form-data" method="post">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="display-5">Patient Update</h1>
+            <input asp-for="PatientId" type="hidden" />
+            <input asp-for="Image" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row mb-2">
+                <label asp-for="PatientName" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="PatientName" class="form-control" />
+                </div>
+                <div class="col-2">
+                    <span asp-validation-for="PatientName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label asp-for="DateOfBirth" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="DateOfBirth" type="date" class="form-control" />
+                </div>
+                <div class="col-2">
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label asp-for="Phone" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="Phone" class="form-control" />
+                </div>
+                <div class="col-2">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label asp-for="ImageFile" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="ImageFile" class="form-control" />
+                </div>
+                <div class="col-2">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label asp-for="Admission" class="col-form-label col-3"></label>
+                <div class="col-7 form-check">
+                    @Html.CheckBoxFor(a => a.Admission)
+                </div>
+                <div class="col-2">
+                    <span asp-validation-for="Admission" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h1 class="display-5">Test Update</h1>
+            <div class="d-flex justify-content-end">
+                <a id="btnPlus" class="btn btn-outline-dark">ADD</a>
+            </div>
+            <div id="testContainer">
+                @foreach (var item in Model.TestList)
+                {
+                    <script>
+                        LoadData(@item);
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-evenly">
+        <button type="submit" value="Update" class="btn btn-outline-success">Update Data</button>
+    </div>
+</form>
+<div>
+    <a class="btn btn-info" asp-action="Index" asp-controller="Patients">Back To List</a>
+</div>
+
+
+
+

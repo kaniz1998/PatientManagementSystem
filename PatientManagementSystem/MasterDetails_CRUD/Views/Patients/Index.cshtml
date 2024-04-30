@@ -1,0 +1,61 @@
+﻿@model PaginatedList<Patient>
+
+@{
+    ViewData["Title"] = "Index";
+    int cp = Model.PageIndex;
+    int tp = Model.TotalPage;
+    var next = Model.HasNextPage ? "" : "disabled";
+    var prev = Model.HasPreviousPage ? "" : "disabled";
+    int i = (cp - 1) * ViewBag.pSize + 1;
+}
+
+<h1>Patient Information</h1>
+<div class="row">
+    <div class="col d-flex justify-content-end">
+        <form asp-action="Index" asp-controller="Patients" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="userText" placeholder="Search Here..." />
+                <button class="btn btn-outline-info">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="d-flex justify-content-end mb-2">
+    <a asp-action="Create" asp-controller="Patients" class="btn btn-primary">Entry New Patient</a>
+</div>
+@foreach (var item in Model)
+{
+    <div class="card mt-2">
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <img src="@item.Image" width="40" />
+                <b><a asp-action="Index" asp-route-userText="@ViewBag.search" asp-route-sortOrder="@ViewBag.sort">Patient Name : </a></b>@Html.DisplayFor(x => item.PatientName)
+                <b> Date Of Birth : </b>@Html.DisplayFor(x => item.DateOfBirth)
+                <b> Phone : </b>@Html.DisplayFor(x => item.Phone)
+                <b> Admission : </b>@Html.DisplayFor(x => item.Admission)
+            </div>
+            <div>
+                <a asp-action="Edit" class="btn btn-success btn-sm" asp-route-id="@item.PatientId">Edit</a>
+                <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.PatientId">Delete</a>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <h2>Test List</h2>
+            @foreach (var k in item.PatientTestInfos)
+            {
+                <ul>
+                    <li>@Html.DisplayFor(x => k.Test.TestName)</li>
+                </ul>
+            }
+        </div>
+    </div>
+}
+<ul class="pagination d-flex justify-content-end mt-2">
+    <li class="page-item @prev">
+        <a asp-action="Index" asp-route-userText="@ViewBag.search" asp-route-sortOrder="@ViewBag.sort" asp-route-page="@(cp-1)" class="btn btn-info btn-sm @prev me-3">Previous</a>
+    </li>
+    <li class="page-item @next">
+        <a asp-action="Index" asp-route-userText="@ViewBag.search" asp-route-sortOrder="@ViewBag.sort" asp-route-page="@(cp+1)" class="btn btn-info btn-sm @next">Next</a>
+    </li>
+</ul>
